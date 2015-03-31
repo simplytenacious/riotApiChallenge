@@ -3,6 +3,7 @@ global $root;
 
 require_once dirname(dirname(__FILE__)).'/lib/common.inc.php';
 require_once $root.'/lib/classes/database/DbMatches.php';
+require_once $root.'/lib/controller/MatchFactory.php';
 
 /**
  * test example
@@ -10,6 +11,7 @@ require_once $root.'/lib/classes/database/DbMatches.php';
 $api = new API($apiKey);
 
 $allMatches = DbMatches::getAllMatches();
+$buildMatches = [];
 
 foreach ($allMatches as $match) {
     $matchData = $api->getMatchData($match->getId());
@@ -18,12 +20,13 @@ foreach ($allMatches as $match) {
         echo $matchData;
     }
 
-    $duration = round($matchData->matchDuration/60);
+    $matchFactory = new MatchFactory($matchData);
 
-    echo "<ul>";
-    echo "<li>".$matchData->matchMode."</li>";
-    echo "<li>".$matchData->region."</li>";
-    echo "<li>".$duration."</li>";
-    echo "<li>".$matchData->queueType."</li>";
-    echo "</ul>";
+    $buildMatches[$matchData->matchId] = $matchFactory->extractMatchInfos();
 }
+
+$h2o = new h2o($root.'/templates/main.html');
+
+$templateData = ['matchInfos' => $buildMatches];
+
+echo $h2o->render($templateData);

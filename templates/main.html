@@ -1,0 +1,16 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>Funny LoL Game</title>
+    </head>
+    <body>
+        {%  for id, matchInfo in matchInfos %}
+            <ul>
+                <li>Mode: {{ matchInfo.mode }}</li>
+                <li>Region: {{ matchInfo.region }}</li>
+                <li>Queue: {{ matchInfo.queue }}</li>
+                <li>Duration: {{ matchInfo.duration }}</li>
+            </ul>
+        {% endfor %}
+    </body>
+</html>
