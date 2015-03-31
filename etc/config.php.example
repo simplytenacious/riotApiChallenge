@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * This is the basic config file, remove .example in the filename to use it
+**/
+
+//DATABASE
+$_db['host'] = '127.0.0.1';          //Mysql-Server IP
+$_db['user'] = 'foo';                //Mysql login user
+$_db['pass'] = 'bar';                //Mysql login password
+$_db['database'] = 'myowndatabase';  //Mysql database
+
+$apiKey = 'XXXXXXXX-XXXXX-XXXX-XXXXXXX-XXXXXX'; //Your API Key goes here
