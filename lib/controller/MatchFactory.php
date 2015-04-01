@@ -31,12 +31,12 @@ class MatchFactory {
     public function extractMatchInfos () {
         $matchData = $this->getMatchData();
 
-        $duration = round($matchData->matchDuration/60);
+        $duration = round($matchData['matchDuration']/60);
 
-        $return = ['mode' => $matchData->matchMode,
-                   'region' => $matchData->region,
+        $return = ['mode' => $matchData['matchMode'],
+                   'region' => $matchData['region'],
                    'duration' => $duration,
-                   'queue' => $matchData->queueType];
+                   'queue' => $matchData['queueType']];
 
         return $return;
     }

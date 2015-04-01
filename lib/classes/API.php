@@ -1,8 +1,19 @@
 <?php
 
 class API {
+    /**
+     * @var string
+     */
     protected $apiKey;
+
+    /**
+     * @var string
+     */
     protected $server;
+
+    /**
+     * @var string
+     */
     protected $basicUrl;
 
     public function __construct ($apiKey = null, $server = 'euw') {
@@ -78,6 +89,6 @@ class API {
             return false;
         }
 
-        return json_decode($matchData);
+        return json_decode($matchData, true);
     }
 }

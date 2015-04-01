@@ -16,13 +16,9 @@ $buildMatches = [];
 foreach ($allMatches as $match) {
     $matchData = $api->getMatchData($match->getId());
 
-    if (!$matchData instanceof stdClass) {
-        echo $matchData;
-    }
-
     $matchFactory = new MatchFactory($matchData);
 
-    $buildMatches[$matchData->matchId] = $matchFactory->extractMatchInfos();
+    $buildMatches[$matchData['matchId']] = $matchFactory->extractMatchInfos();
 }
 
 $h2o = new h2o($root.'/templates/main.html');
