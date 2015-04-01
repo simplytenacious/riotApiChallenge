@@ -5,6 +5,7 @@
     </head>
     <body>
         {% for id, matchInfo in matchInfos %}
+        Game Nr. {{ loop.counter }}
             <ul>
                 <li>Mode: {{ matchInfo.mode }}</li>
                 <li>Region: {{ matchInfo.region }}</li>
@@ -22,6 +23,5 @@
             {% endfor %}
             </p>
         {% endfor %}
-        <
     </body>
 </html>
