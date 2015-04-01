@@ -8,3 +8,6 @@ require_once $root.'/lib/classes/API.php';
 require_once $root.'/lib/h2o.php';
 
 \connection\Connection::setConnectionData($_db);
+
+API::setApiKey($apiKey);
+

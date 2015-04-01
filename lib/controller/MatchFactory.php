@@ -1,5 +1,8 @@
 <?php
 
+global $root;
+require_once $root.'/lib/classes/database/DbChampions.php';
+
 class MatchFactory {
     /**
      * @var stdClass
@@ -33,10 +36,19 @@ class MatchFactory {
 
         $duration = round($matchData['matchDuration']/60);
 
+        $teams = [];
+        foreach ($matchData['participants'] as $participant) {
+            $champion = new DbChampions($participant['championId']);
+
+            $teams[$participant['teamId']][$participant['participantId']] = ['champion' => $champion->getName()];
+
+        }
+
         $return = ['mode' => $matchData['matchMode'],
                    'region' => $matchData['region'],
                    'duration' => $duration,
-                   'queue' => $matchData['queueType']];
+                   'queue' => $matchData['queueType'],
+                   'teams' => $teams];
 
         return $return;
     }

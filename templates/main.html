@@ -4,13 +4,24 @@
         <title>Funny LoL Game</title>
     </head>
     <body>
-        {%  for id, matchInfo in matchInfos %}
+        {% for id, matchInfo in matchInfos %}
             <ul>
                 <li>Mode: {{ matchInfo.mode }}</li>
                 <li>Region: {{ matchInfo.region }}</li>
                 <li>Queue: {{ matchInfo.queue }}</li>
                 <li>Duration: {{ matchInfo.duration }}</li>
             </ul>
+            <p>
+            {% for team, participants in matchInfo.teams %}
+                <ul>
+                Team {{ loop.counter }}:
+                {%  for participant in participants %}
+                    <li>{{ participant.champion }}</li>
+                {% endfor %}
+                </ul>
+            {% endfor %}
+            </p>
         {% endfor %}
+        <
     </body>
 </html>
