@@ -10,11 +10,19 @@ require_once $root.'/lib/controller/MatchFactory.php';
  */
 $api = new API($apiKey);
 
-$allMatches = DbMatches::getAllMatches();
-$buildMatches = [];
+//$allMatches = DbMatches::getAllMatches();
 
-foreach ($allMatches as $match) {
-    $matchData = $api->getMatchData($match->getId());
+$allMatches = $api->getNewMatches('2015-04-02 08:00:00');
+
+if (isset($allMatches['status'])) {
+    echo $allMatches['status']['message'];
+
+    return false;
+}
+
+$buildMatches = [];
+foreach ($allMatches as $key => $matchID) {
+    $matchData = $api->getMatchData($matchID);
 
     $matchFactory = new MatchFactory($matchData);
 

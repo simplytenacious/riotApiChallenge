@@ -72,8 +72,31 @@ class API {
         $this->basicUrl = $basicUrl;
     }
 
-    public function encodeParam ($param) {
+    private function encodeParam ($param) {
         return strtolower(rawurlencode($param));
+    }
+
+    private function dateTimeToTimeString ($dateTime) {
+
+        $date = new DateTime($dateTime);
+        $hours = $date->format('H');
+        $minutes = (integer) $date->format('i');
+
+        // round down to the nearest multiple of 5
+        $minutes = floor($minutes / 5 ) * 5;
+
+        // if $minutes is 0 or 5 we add a trailing 0
+        if($minutes < 10) {
+            $minutes = '0' . $minutes;
+        }
+
+        try {
+            $dateTime = new DateTime($date->format('d.m.Y').' '.$hours.':'.$minutes);
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return $dateTime->format('U');
     }
 
     /**
@@ -112,6 +135,26 @@ class API {
         }
 
         return json_decode($champData, true);
+    }
+
+    public function getNewMatches ($dateTime) {
+        $dateTime = $this->dateTimeToTimeString($dateTime);
+
+        if ($dateTime === false) {
+            return false;
+        }
+
+        $curl = curl_init($this->getBasicUrl().$this->getServer().'/v4.1/game/ids?beginDate='.$dateTime.'&api_key='.$this->getApiKey());
+
+        try {
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            $matches = curl_exec($curl);
+            curl_close($curl);
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return json_decode($matches, true);
     }
 
     public static function getAPI ($server = 'euw') {
